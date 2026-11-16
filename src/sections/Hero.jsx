@@ -110,7 +110,7 @@ export default function Hero() {
 
       <div className="relative mx-auto max-w-7xl">
         {/* Carousel content */}
-        <div className="relative min-h-[900px] sm:min-h-[950px] md:min-h-[620px] lg:min-h-[570px]">
+        <div className="relative md:min-h-[620px] lg:min-h-[570px]">
           {slides.map((item, index) => {
             const isActive = activeSlide === index;
 
@@ -118,14 +118,14 @@ export default function Hero() {
               <div
                 key={item.id}
                 aria-hidden={!isActive}
-                className={`absolute inset-0 grid grid-cols-1 grid-rows-[270px_auto] items-center gap-7 transition-all duration-700 ease-in-out sm:grid-rows-[350px_auto] sm:gap-8 md:grid-cols-2 md:grid-rows-1 md:gap-10 lg:gap-14 ${
+                className={`grid grid-cols-1 grid-rows-[240px_auto] items-start gap-5 transition-all duration-700 ease-in-out sm:grid-rows-[300px_auto] sm:gap-6 md:absolute md:inset-0 md:grid-cols-2 md:grid-rows-1 md:items-center md:gap-10 lg:gap-14 ${
                   isActive
-                    ? "translate-x-0 opacity-100"
-                    : "pointer-events-none translate-x-8 opacity-0"
+                    ? "relative translate-x-0 opacity-100 md:relative"
+                    : "pointer-events-none absolute inset-0 translate-x-8 opacity-0"
                 }`}
               >
                 {/* Right image - First on mobile */}
-                <div className="relative order-1 h-[270px] overflow-hidden rounded-[28px] bg-white shadow-2xl shadow-[#12365A]/10 sm:h-[350px] md:order-2 md:h-[420px] lg:h-[480px]">
+                <div className="relative order-1 h-[240px] overflow-hidden rounded-[24px] bg-white shadow-2xl shadow-[#12365A]/10 sm:h-[300px] md:order-2 md:h-[420px] lg:h-[480px]">
                   <img
                     src={item.image}
                     alt={item.imageAlt}
@@ -139,7 +139,7 @@ export default function Hero() {
 
                 {/* Left content - Second on mobile */}
                 <div
-                  className={`order-2 flex flex-col justify-center py-3 transition-all duration-700 md:order-1 ${
+                  className={`order-2 flex flex-col justify-center py-1 transition-all duration-700 md:order-1 ${
                     isActive ? "translate-y-0" : "translate-y-4"
                   }`}
                 >
@@ -155,12 +155,12 @@ export default function Hero() {
                     {item.title}
                   </h1>
 
-                  <p className="mt-5 max-w-xl text-base leading-8 text-[#45647E] sm:mt-6 sm:text-lg">
+                  <p className="mt-4 max-w-xl text-base leading-7 text-[#45647E] sm:mt-5 sm:text-lg sm:leading-8">
                     {item.description}
                   </p>
 
                   {/* CTA buttons */}
-                  <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:gap-4">
+                  <div className="mt-5 flex flex-col gap-3 sm:mt-6 sm:flex-row sm:gap-4">
                     <a
                       href={item.primaryLink}
                       tabIndex={isActive ? 0 : -1}
@@ -184,7 +184,7 @@ export default function Hero() {
                   </div>
 
                   {/* Trust indicators */}
-                  <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs font-medium text-[#45647E] sm:mt-10 sm:text-sm">
+                  <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs font-medium text-[#45647E] sm:mt-7 sm:text-sm md:mt-10">
                     <span className="flex items-center gap-2">
                       <span className="h-2 w-2 rounded-full bg-[#2585C5]" />
                       Premium Eyewear
@@ -202,7 +202,7 @@ export default function Hero() {
         </div>
 
         {/* Carousel navigation */}
-        <div className="relative z-10 mt-6 border-t border-[#12365A]/10 pt-5 sm:mt-8 sm:pt-6">
+        <div className="relative z-10 mt-5 border-t border-[#12365A]/10 pt-4 sm:mt-7 sm:pt-6 md:mt-8">
           {/* Mobile navigation */}
           <div className="grid grid-cols-2 items-center gap-y-5 sm:hidden">
             {/* Slide count */}
