@@ -128,7 +128,7 @@ export default function Hero() {
               >
                 {/* Left content */}
                 <div
-                  className={`order-1 flex flex-col justify-center py-4 transition-all duration-700 ${
+                  className={`lg:order-1 md:order-1 sm:order-2 order-2 flex flex-col justify-center py-4 transition-all duration-700  ${
                     isActive ? "translate-y-0" : "translate-y-4"
                   }`}
                 >
@@ -184,7 +184,7 @@ export default function Hero() {
                 </div>
 
                 {/* Right image */}
-                <div className="relative order-2 h-[270px] overflow-hidden rounded-[28px] bg-white shadow-2xl shadow-[#12365A]/10 sm:h-[350px] md:h-[420px] lg:h-[480px]">
+                <div className="relative lg:order-2 md:order-2 sm:order-1 order-1 h-[270px] overflow-hidden rounded-[28px] bg-white shadow-2xl shadow-[#12365A]/10 sm:h-[350px] md:h-[420px] lg:h-[480px]">
                   <img
                     src={item.image}
                     alt={item.imageAlt}
