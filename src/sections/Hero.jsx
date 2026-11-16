@@ -89,8 +89,6 @@ export default function Hero() {
     };
   }, [nextSlide, previousSlide]);
 
-  const slide = slides[activeSlide];
-
   return (
     <section
       id="home"
@@ -112,7 +110,7 @@ export default function Hero() {
 
       <div className="relative mx-auto max-w-7xl">
         {/* Carousel content */}
-        <div className="relative min-h-[620px] sm:min-h-[580px] lg:min-h-[570px]">
+        <div className="relative min-h-[900px] sm:min-h-[950px] md:min-h-[620px] lg:min-h-[570px]">
           {slides.map((item, index) => {
             const isActive = activeSlide === index;
 
@@ -120,20 +118,34 @@ export default function Hero() {
               <div
                 key={item.id}
                 aria-hidden={!isActive}
-                className={`absolute inset-0 grid grid-cols-1 items-center gap-8 transition-all duration-700 ease-in-out md:grid-cols-2 md:gap-10 lg:gap-14 ${
+                className={`absolute inset-0 grid grid-cols-1 grid-rows-[270px_auto] items-center gap-7 transition-all duration-700 ease-in-out sm:grid-rows-[350px_auto] sm:gap-8 md:grid-cols-2 md:grid-rows-1 md:gap-10 lg:gap-14 ${
                   isActive
                     ? "translate-x-0 opacity-100"
                     : "pointer-events-none translate-x-8 opacity-0"
                 }`}
               >
-                {/* Left content */}
+                {/* Right image - First on mobile */}
+                <div className="relative order-1 h-[270px] overflow-hidden rounded-[28px] bg-white shadow-2xl shadow-[#12365A]/10 sm:h-[350px] md:order-2 md:h-[420px] lg:h-[480px]">
+                  <img
+                    src={item.image}
+                    alt={item.imageAlt}
+                    className="h-full w-full object-cover object-center"
+                    fetchPriority={index === 0 ? "high" : "auto"}
+                    loading={index === 0 ? "eager" : "lazy"}
+                  />
+
+                  <div className="pointer-events-none absolute inset-0 rounded-[28px] ring-1 ring-inset ring-[#12365A]/10" />
+                </div>
+
+                {/* Left content - Second on mobile */}
                 <div
-                  className={`lg:order-1 md:order-1 sm:order-2 order-2 flex flex-col justify-center py-4 transition-all duration-700  ${
+                  className={`order-2 flex flex-col justify-center py-3 transition-all duration-700 md:order-1 ${
                     isActive ? "translate-y-0" : "translate-y-4"
                   }`}
                 >
                   <div className="mb-5 flex items-center gap-2">
                     <span className="h-[2px] w-8 bg-[#2585C5]" />
+
                     <span className="text-xs font-bold tracking-[0.2em] text-[#2585C5] sm:text-sm">
                       {item.label}
                     </span>
@@ -143,18 +155,19 @@ export default function Hero() {
                     {item.title}
                   </h1>
 
-                  <p className="mt-6 max-w-xl text-base leading-8 text-[#45647E] sm:text-lg">
+                  <p className="mt-5 max-w-xl text-base leading-8 text-[#45647E] sm:mt-6 sm:text-lg">
                     {item.description}
                   </p>
 
                   {/* CTA buttons */}
-                  <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+                  <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:gap-4">
                     <a
                       href={item.primaryLink}
                       tabIndex={isActive ? 0 : -1}
                       className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#12365A] px-6 py-4 text-sm font-semibold text-white shadow-lg shadow-[#12365A]/15 transition-all duration-300 hover:-translate-y-1 hover:bg-[#1C4D78] hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2585C5]"
                     >
                       {item.primaryButton}
+
                       <ChevronRight
                         size={18}
                         className="transition-transform group-hover:translate-x-1"
@@ -171,30 +184,17 @@ export default function Hero() {
                   </div>
 
                   {/* Trust indicators */}
-                  <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs font-medium text-[#45647E] sm:text-sm">
+                  <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs font-medium text-[#45647E] sm:mt-10 sm:text-sm">
                     <span className="flex items-center gap-2">
                       <span className="h-2 w-2 rounded-full bg-[#2585C5]" />
                       Premium Eyewear
                     </span>
+
                     <span className="flex items-center gap-2">
                       <span className="h-2 w-2 rounded-full bg-[#2585C5]" />
                       Expert Eye Care
                     </span>
                   </div>
-                </div>
-
-                {/* Right image */}
-                <div className="relative lg:order-2 md:order-2 sm:order-1 order-1 h-[270px] overflow-hidden rounded-[28px] bg-white shadow-2xl shadow-[#12365A]/10 sm:h-[350px] md:h-[420px] lg:h-[480px]">
-                  <img
-                    src={item.image}
-                    alt={item.imageAlt}
-                    className="h-full w-full object-cover object-center"
-                    fetchPriority={index === 0 ? "high" : "auto"}
-                    loading={index === 0 ? "eager" : "lazy"}
-                  />
-
-                  {/* Image decorative border */}
-                  <div className="pointer-events-none absolute inset-0 rounded-[28px] ring-1 ring-inset ring-[#12365A]/10" />
                 </div>
               </div>
             );
@@ -202,51 +202,107 @@ export default function Hero() {
         </div>
 
         {/* Carousel navigation */}
-        <div className="relative z-10 mt-8 flex items-center justify-between border-t border-[#12365A]/10 pt-6">
-          {/* Slide count */}
-          <div className="flex items-center gap-2 text-sm font-semibold text-[#12365A]">
-            <span className="text-lg">0{activeSlide + 1}</span>
-            <span className="text-[#12365A]/40">/</span>
-            <span className="text-[#12365A]/40">03</span>
-          </div>
+        <div className="relative z-10 mt-6 border-t border-[#12365A]/10 pt-5 sm:mt-8 sm:pt-6">
+          {/* Mobile navigation */}
+          <div className="grid grid-cols-2 items-center gap-y-5 sm:hidden">
+            {/* Slide count */}
+            <div className="flex items-center gap-2 text-sm font-semibold text-[#12365A]">
+              <span className="text-lg tabular-nums">0{activeSlide + 1}</span>
 
-          {/* Dots */}
-          <div className="flex items-center gap-3">
-            {slides.map((item, index) => (
+              <span className="text-[#12365A]/40">/</span>
+
+              <span className="text-[#12365A]/40">03</span>
+            </div>
+
+            {/* Previous / Next */}
+            <div className="flex items-center justify-end gap-3">
               <button
-                key={item.id}
                 type="button"
-                onClick={() => goToSlide(index)}
-                aria-label={`Go to slide ${index + 1}: ${item.label}`}
-                aria-current={activeSlide === index ? "true" : undefined}
-                className={`h-2.5 rounded-full transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2585C5] ${
-                  activeSlide === index
-                    ? "w-9 bg-[#12365A]"
-                    : "w-2.5 bg-[#12365A]/25 hover:bg-[#12365A]/60"
-                }`}
-              />
-            ))}
+                onClick={previousSlide}
+                aria-label="Previous slide"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#12365A]/20 bg-white text-[#12365A] shadow-sm transition-all hover:bg-[#12365A] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2585C5]"
+              >
+                <ArrowLeft size={18} />
+              </button>
+
+              <button
+                type="button"
+                onClick={nextSlide}
+                aria-label="Next slide"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#12365A] text-white shadow-md transition-all hover:bg-[#2585C5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2585C5]"
+              >
+                <ArrowRight size={18} />
+              </button>
+            </div>
+
+            {/* Pagination dots */}
+            <div className="col-span-2 flex items-center justify-center gap-3">
+              {slides.map((item, index) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => goToSlide(index)}
+                  aria-label={`Go to slide ${index + 1}: ${item.label}`}
+                  aria-current={activeSlide === index ? "true" : undefined}
+                  className={`h-2.5 rounded-full transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2585C5] ${
+                    activeSlide === index
+                      ? "w-9 bg-[#12365A]"
+                      : "w-2.5 bg-[#12365A]/25 hover:bg-[#12365A]/60"
+                  }`}
+                />
+              ))}
+            </div>
           </div>
 
-          {/* Previous and Next */}
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={previousSlide}
-              aria-label="Previous slide"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-[#12365A]/20 bg-white text-[#12365A] transition-all hover:bg-[#12365A] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2585C5]"
-            >
-              <ArrowLeft size={19} />
-            </button>
+          {/* Desktop navigation */}
+          <div className="hidden items-center justify-between sm:flex">
+            {/* Slide count */}
+            <div className="flex items-center gap-2 text-sm font-semibold text-[#12365A]">
+              <span className="text-lg tabular-nums">0{activeSlide + 1}</span>
 
-            <button
-              type="button"
-              onClick={nextSlide}
-              aria-label="Next slide"
-              className="flex h-11 w-11 items-center justify-center rounded-full bg-[#12365A] text-white shadow-md transition-all hover:bg-[#2585C5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2585C5]"
-            >
-              <ArrowRight size={19} />
-            </button>
+              <span className="text-[#12365A]/40">/</span>
+
+              <span className="text-[#12365A]/40">03</span>
+            </div>
+
+            {/* Pagination dots */}
+            <div className="flex items-center gap-3">
+              {slides.map((item, index) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => goToSlide(index)}
+                  aria-label={`Go to slide ${index + 1}: ${item.label}`}
+                  aria-current={activeSlide === index ? "true" : undefined}
+                  className={`h-2.5 rounded-full transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2585C5] ${
+                    activeSlide === index
+                      ? "w-9 bg-[#12365A]"
+                      : "w-2.5 bg-[#12365A]/25 hover:bg-[#12365A]/60"
+                  }`}
+                />
+              ))}
+            </div>
+
+            {/* Previous / Next */}
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={previousSlide}
+                aria-label="Previous slide"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-[#12365A]/20 bg-white text-[#12365A] transition-all hover:bg-[#12365A] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2585C5]"
+              >
+                <ArrowLeft size={19} />
+              </button>
+
+              <button
+                type="button"
+                onClick={nextSlide}
+                aria-label="Next slide"
+                className="flex h-11 w-11 items-center justify-center rounded-full bg-[#12365A] text-white shadow-md transition-all hover:bg-[#2585C5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2585C5]"
+              >
+                <ArrowRight size={19} />
+              </button>
+            </div>
           </div>
         </div>
       </div>
