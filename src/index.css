@@ -1,0 +1,52 @@
+
+@import "tailwindcss";
+
+:root {
+  font-family: "Inter", sans-serif;
+
+  --color-sky: #E5F4FF;
+  --color-white: #FFFFFF;
+  --color-navy: #12365A;
+  --color-accent: #2585C5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 110px;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  font-family: "Inter", sans-serif;
+  background: #FFFFFF;
+  color: #12365A;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.font-display {
+  font-family: "Playfair Display", serif;
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
